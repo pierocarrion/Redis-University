@@ -1,0 +1,30 @@
+<style type= text/css>
+    .code {font-family: 'courier new', courier; font-weight: bold; font-size: 18px !important;}
+</style>
+
+<h1>Connecting to a Redis Cluster</h1>
+
+<p>
+    Of the "advanced" Redis Connections, cluster is probably the easiest to 
+    understand. Connecting to an OSS Cluster instance is the same as connecting
+    to a standalone Redis Instance. The only exception is that when you are
+    listing endpoints, you'll want to use more than one. This is so that if
+    the endpoint you are trying to reach has failed over, the Multiplexer
+    still has a chance to connect to the other master instances.
+</p>
+
+<p>
+    An example <span class="code">ConfigurationOptions</span> for a cluster instance might look something along the lines of this, notice
+    how the Endpoints collection takes multiple endpoints which the <span class="code">ConnectionMultiplexer</span> can use as backups if
+    one of the endpoints should fail to respond (possibly because it's failed over).
+</p>
+
+<p>
+<pre class="code">
+    var options = new ConfigurationOptions
+    {
+        // add and update parameters as needed
+        EndPoints = new EndPointCollection{"redis-1:6379", "redis-2:6379", "redis-3:6379"}
+    };
+</pre>
+</p>
